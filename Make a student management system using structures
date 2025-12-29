@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct Student
+{
+    int roll;
+    char name[10];
+    float marks;
+};
+
+void Details(int n,struct Student arr[n])
+{
+    for(int i=0;i<n;i++)
+    {
+        printf("Enter Roll Number:"); 
+        scanf("%d",&arr[i].roll);
+        getchar();
+        printf("\nEnter Name:");
+        fgets(arr[i].name,10,stdin);
+        printf("\nEnter their marks:"); 
+        scanf("%f",&arr[i].marks);
+    }
+}
+
+void Display(int n, struct Student arr[n])
+{
+    for(int i=0;i<n;i++)
+    {
+        printf("\nRoll Number:%d\n",arr[i].roll);
+        printf("Name:"); 
+        puts(arr[i].name); 
+        printf("Marks:%f\n",arr[i].marks); 
+    }
+}
+
+int Remover(int rol, int n, struct Student arr[n])
+{
+    int m=-1;
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i].roll==rol)
+        {
+            m=i;
+            break;
+        }
+    }
+    if(m==-1)
+    {
+        return;
+    }
+    for(int i=m;i<n-1;i++)
+    {
+        arr[i].roll=arr[i+1].roll;
+        strcpy(arr[i].name,arr[i+1].name);
+        arr[i].marks=arr[i+1].marks;
+    }
+    return 1;
+}
+
+void main(void)
+{
+    int n;
+    printf("Number of students:");
+    scanf("%d",&n);
+    struct Student arr[50];
+    printf("   :::MENU:::   \n 1:Enter Details of Students.\n 2:Add a Student.\n 3:Remove a student.\n 4:Display All Students.\n");
+    int choice;
+    while(1)
+    {
+        printf("Enter Choice:");
+        scanf("%d",&choice);
+    switch(choice)
+    {
+        case 1:
+        {
+            Details(n,arr);
+            Display(n,arr);
+            break;
+        }
+        case 2:
+        {
+            printf("Enter Roll Number:"); 
+            scanf("%d",&arr[n].roll);
+            getchar();
+            printf("Enter Name:"); 
+            fgets(arr[n].name,10,stdin);
+            printf("Enter their marks:"); 
+            scanf("%f",&arr[n].marks);
+            n++;
+            break;
+        }
+        case 3:
+        {
+            int rol;
+            printf("Enter Roll number to be removed:");
+            scanf("%d",&rol);
+            
+            Display(n,arr);
+            if(Remover(rol,n,arr))
+            n--;
+            break;
+        }
+        case 4:
+        {
+            Display(n,arr);
+            break;
+        }
+    }
+    }
+}
