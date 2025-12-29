@@ -1,0 +1,58 @@
+#include<stdio.h>
+
+struct complex
+{
+    float real;
+    float imgnry;
+};
+
+void main()
+{
+    struct complex c1,c2;
+    printf("   :::MENU:::   \n1.Add two complex Numbers.\n2.Subtract two complex numbers.\n3.Multiply two complex Numbers.\n");
+    int choice;
+    printf("Enter Choice:");
+    scanf("%d",&choice);
+    switch(choice)
+    {
+        case 1:
+        {
+            printf("Enter Real part of complex 1:");
+            scanf("%f",&c1.real);
+            printf("Enter Imaginary part of complex 1:");
+            scanf("%f",&c1.imgnry);
+            printf("Enter Real part of complex 2:");
+            scanf("%f",&c2.real);
+            printf("Enter Imaginary part of complex 2:");
+            scanf("%f",&c2.imgnry);
+            printf("%.2f + i%.2f",c1.real+c2.real,c1.imgnry+c2.imgnry);
+            break;
+        }
+        case 2:
+        {
+            printf("Enter Real part of complex 1:");
+            scanf("%f",&c1.real);
+            printf("Enter Imaginary part of complex 1:");
+            scanf("%f",&c1.imgnry);
+            printf("Enter Real part of complex 2:");
+            scanf("%f",&c2.real);
+            printf("Enter Imaginary part of complex 2:");
+            scanf("%f",&c2.imgnry);
+            printf("%.2f + i%.2f",c1.real-c2.real,c1.imgnry-c2.imgnry);
+            break;
+        }
+        case 3:
+        {
+            printf("Enter Real part of complex 1:");
+            scanf("%f",&c1.real);
+            printf("Enter Imaginary part of complex 1:");
+            scanf("%f",&c1.imgnry);
+            printf("Enter Real part of complex 2:");
+            scanf("%f",&c2.real);
+            printf("Enter Imaginary part of complex 2:");
+            scanf("%f",&c2.imgnry);
+            printf("%.2f + %.2fi",c1.real*c2.real-c1.imgnry*c2.imgnry,c1.real*c2.imgnry+c1.imgnry*c2.real);
+            break;
+        }
+    }
+}
