@@ -1,0 +1,51 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Student
+{
+    int roll;
+    char name[10];
+    float cpi;
+};
+void Display(int n, struct Student std[n])
+{
+    for(int i=0;i<n;i++)
+    {
+        printf("   :::Detail %d:::\n",i); 
+        printf("Roll Number: %d\n",std[i].roll);
+        printf("Name:");
+        puts(std[i].name);
+        printf("CPI: %0.2f\n",std[i].cpi);
+    }
+}
+void main()
+{
+    int n;
+    printf("Enter Number of Students:");
+    scanf("%d",&n);
+    struct Student std[n];
+    for(int i=0;i<n;i++)
+    {
+        printf("Enter Roll number %d:",i);
+        scanf("%d",&std[i].roll);
+        printf("Enter Their Name:");
+        getchar();
+        fgets(std[i].name,10,stdin);
+        printf("Enter CPI:");
+        scanf("%f",&std[i].cpi);
+    }   
+    Display(n,std);
+    printf("Enter index of student to be edited:");
+    int ind;
+    scanf("%d",&ind);
+    printf("Enter New roll no.:");
+    scanf("%d",&std[ind].roll);
+    printf("Enter New Name:");
+    getchar();
+    fgets(std[ind].name,10,stdin);
+    printf("Enter New CPI:");
+    scanf("%f",&std[ind].cpi);
+    Display(n,std);
+}
+
