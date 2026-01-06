@@ -1,0 +1,34 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Gametime
+{
+    float cs2;
+    float minecraft;
+    float war_robots;
+};
+
+void main(void)
+{
+    printf("Enter Number of Users:");
+    int n;
+    scanf("%d",&n);
+    struct Gametime *ptr_g[n];
+    for(int i=0;i<n;i++)
+    {
+        ptr_g[i]=(struct Gametime *)calloc(1,sizeof(struct Gametime));
+        printf("Enter USER %d Data\n",i+1);
+        printf("Enter Counter Strike 2 Gametime: ");
+        scanf("%f",&ptr_g[i]->cs2);
+        printf("Enter Minecraft Gametime: ");
+        scanf("%f",&ptr_g[i]->minecraft);
+        printf("Enter WarRobots Gametime: ");
+        scanf("%f",&ptr_g[i]->war_robots);
+    }
+    for(int i=0;i<n;i++)
+    {
+        printf("\n  :::USER %d Gametimes:::  \n Counter Strike 2: %.1f \n Minecraft: %.1f \n WarRobots: %.1f \n",i+1,ptr_g[i]->cs2,ptr_g[i]->minecraft,ptr_g[i]->war_robots);
+        printf("Total Gametime: %.1f",ptr_g[i]->cs2+ptr_g[i]->minecraft+ptr_g[i]->war_robots);
+        free(ptr_g[i]);
+    }
+}
