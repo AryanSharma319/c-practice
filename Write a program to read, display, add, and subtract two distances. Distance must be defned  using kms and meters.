@@ -1,0 +1,68 @@
+#include<stdio.h>
+
+struct Distance
+{
+    int Km;
+    int meter;
+};
+
+void Difference(struct Distance dist1, struct Distance dist2, struct Distance *dist3)
+{
+    if(dist1.Km*1000+dist1.meter>=dist2.Km*1000+dist2.meter)
+    {
+        int d=(dist1.Km*1000+dist1.meter)-(dist2.Km*1000+dist2.meter);
+        dist3->meter=d%1000;
+        dist3->Km=d/1000;
+    }
+    else
+    {
+        int d=-(dist1.Km*1000+dist1.meter)+(dist2.Km*1000+dist2.meter);
+        dist3->meter=d%1000;
+        dist3->Km=d/1000;
+    }
+}
+
+void main(void)
+{
+    struct Distance dist[3];
+    printf("Enter First Distance here\n");
+    printf("Enter Kilometers:");
+    scanf("%d",&dist->Km);
+    printf("Enter meters:");
+    scanf("%d",&dist->meter);
+    printf("Enter Second Distance here\n");
+    printf("Enter Kilometers:");
+    scanf("%d",&(dist+1)->Km);
+    printf("Enter meters:");
+    scanf("%d",&(dist+1)->meter);
+    printf("  ::::MENU::::\n 1:Display the Distances.\n 2:Add the two Distances.\n 3:Subtract the two Distances.");
+    printf("\nEnter choice:");
+    int ch;
+    scanf("%d",&ch);
+    switch(ch)
+    {
+        case 1:
+        {
+            int km1=(dist->Km*1000+dist->meter)/1000;
+            int m1=(dist->Km*1000+dist->meter)%1000;
+            int km2=((dist+1)->Km*1000+(dist+1)->meter)/1000;
+            int m2=((dist+1)->Km*1000+(dist+1)->meter)%1000;
+            printf("Distance 1: %d Km and %d m\n",km1,m1);
+            printf("Distance 2: %d Km and %d m",km2,m2);
+            break;
+        }
+        case 2:
+        {
+            int km=(dist->Km*1000+(dist+1)->Km*1000+dist->meter+(dist+1)->meter)/1000;
+            int m=(dist->Km*1000+(dist+1)->Km*1000+dist->meter+(dist+1)->meter)%1000;
+            printf("Addition: %d Km and %d m",km,m);
+            break;
+        }
+        case 3:
+        {
+            Difference(dist[0],dist[1],&dist[2]);
+            printf("Difference: %d Km and %d m",(dist+2)->Km,(dist+2)->meter);
+            break;
+        }
+    }
+}
