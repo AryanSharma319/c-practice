@@ -1,0 +1,27 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Gametime
+{
+    float cs2;
+    float minecraft;
+    float war_robots;
+};
+void Display(struct Gametime *ptr)
+{
+    printf("\n  :::Gametimes:::  \n Counter Strike 2: %.1f \n Minecraft: %.1f \n WarRobots: %.1f \n",ptr->cs2,ptr->minecraft,ptr->war_robots);
+    printf("Total Gametime: %.1f",ptr->cs2+ptr->minecraft+ptr->war_robots);
+}
+void main(void)
+{
+    struct Gametime *ptr_g;
+    ptr_g=(struct Gametime *)calloc(1,sizeof(struct Gametime));
+    printf("Enter Counter Strike 2 Gametime: ");
+    scanf("%f",&ptr_g->cs2);
+    printf("Enter Minecraft Gametime: ");
+    scanf("%f",&ptr_g->minecraft);
+    printf("Enter WarRobots Gametime: ");
+    scanf("%f",&ptr_g->war_robots);
+    Display(ptr_g);
+    free(ptr_g);
+}
