@@ -1,0 +1,140 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+struct Node *Creator(struct Node *head, int n)
+{
+    struct Node* temp=head;
+    for(int i=0;i<n;i++)
+    {
+        struct Node *newnode=malloc(sizeof(struct Node));
+        printf("Enter Data:");
+        scanf("%d",&newnode->data);
+        newnode->next=NULL;
+        if(head==NULL)
+        {
+            head=newnode;
+            temp=head;
+        }
+        else
+        {
+            newnode->next=NULL;
+            temp->next=newnode;
+            temp=temp->next;
+        }
+    }
+    return head;
+}
+void Display(struct Node *head)
+{
+    struct Node *temp=head;
+    while(temp!=NULL)
+    {
+        printf("%d->",temp->data);
+        temp=temp->next;
+    }
+    printf("NULL");
+}
+struct Node *Insert(int pos, int data, struct Node *head)
+{
+    struct Node *temp=head;
+    struct Node *newnode=malloc(sizeof(struct Node));
+    newnode->next=NULL;
+    newnode->data=data;
+    if(pos==0)
+    {
+        newnode->next=head;
+        return newnode;
+    }
+    for(int i=0;i<pos-1 && temp!=NULL;i++)
+    {
+        temp=temp->next;
+    }
+    if(temp==NULL)
+    return head;
+    newnode->next=temp->next;
+    temp->next=newnode;
+    return head;
+}
+struct Node *Delete(int pos, struct Node *head)
+{
+    if(head==NULL)
+    return head;
+    struct Node *temp=head;
+    for(int i=0;i<pos-1 && temp->next!=NULL;i++)
+    {
+        temp=temp->next;
+    }
+    struct Node *del = temp->next;
+    temp->next = del->next;
+    free(del);
+    return head;
+}
+void Search(int ele, struct Node *head)
+{
+    struct Node *temp=head;
+    int i=0;
+    while(temp!=NULL)
+    {
+        if(temp->data==ele)
+        {
+            printf("Found the element at %d Position",i);
+            return;
+        }
+        temp=temp->next;
+        i++;
+    }
+    printf("Not Found");
+}
+void main(void)
+{
+    int n;
+    printf("Enter Number of Nodes:");
+    scanf("%d",&n);
+    struct Node *head=NULL;
+    head=Creator(head,n);
+    printf("1: Display.\n2: Insert.\n3: Delete.\n4:Search.");
+    int choice;
+    printf("\nEnter Choice:");
+    scanf("%d",&choice);
+    switch(choice)
+    {
+        case 1:
+        {
+            Display(head);
+            break;
+        }
+        case 2:
+        {
+            int pos,data;
+            printf("Enter Data: ");
+            scanf("%d",&data);
+            printf("Enter Position: ");
+            scanf("%d",&pos);
+            head=Insert(pos,data,head);
+            Display(head);
+            break;
+        }
+        case 3:
+        {
+            int pos;
+            printf("Enter Position: ");
+            scanf("%d",&pos);
+            head=Delete(pos,head);
+            Display(head);
+            break;
+        }
+        case 4:
+        {
+            printf("Enter Element to be Searched:");
+            int ele;
+            scanf("%d",&ele);
+            Search(ele,head);
+            break;
+        }
+    }
+}
