@@ -1,0 +1,51 @@
+#include<stdio.h>
+
+void Sorter(int n, int arr[])
+{
+    for(int i=0;i<n-1;i++)
+    {
+        for(int j=i+1;j<n;j++)
+        {
+            if(arr[j]>arr[i])
+            {
+                int temp=arr[j];
+                arr[j]=arr[i];
+                arr[i]=temp;
+            }
+        }
+    }
+}
+void main(void)
+{
+    int l,m;
+    printf("Enter Number of Elements for first array:");
+    scanf("%d",&l);
+    printf("Enter Number of Elements for second array:");
+    scanf("%d",&m);
+    int arr1[l],arr2[m],arr[l+m];
+    for(int i=0;i<l;i++)
+    {
+        printf("Enter Element for arr1[%d]: ",i);
+        scanf("%d",&arr1[i]);
+    }
+    for(int i=0;i<m;i++)
+    {
+        printf("Enter Element for arr2[%d]: ",i);
+        scanf("%d",&arr2[i]);
+    }
+    Sorter(l,arr1);
+    Sorter(m,arr2);
+    for(int i=0;i<l;i++)
+    {
+        arr[i]=arr1[i];
+    }
+    for(int i=0;i<m;i++)
+    {
+        arr[i+l]=arr2[i];
+    }
+    Sorter(l+m,arr);
+    for(int i=0;i<l+m;i++)
+    {
+        printf("arr[%d]=%d\t",i,arr[i]);
+    }
+}
