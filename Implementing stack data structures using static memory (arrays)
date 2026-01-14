@@ -1,0 +1,73 @@
+#include<stdio.h>
+
+int stack[5];
+int top=-1;
+void Push()
+{
+    if(top==4)
+    {
+        printf("Overflow");
+        return;
+    }
+    printf("Enter Element:");
+    scanf("%d",&stack[++top]);
+}
+void Pop()
+{
+    if(top==-1)
+    {
+        printf("Underflow");
+        return;
+    }
+    printf("Popped %d",stack[top--]);
+}
+void Peek()
+{
+    if(top==-1)
+    {
+        printf("Empty Stack");
+        return;
+    }
+    printf("Top: %d",stack[top]);
+}
+void Display()
+{
+    for(int i=top;i>=0;i--)
+    {
+        printf("%d\n",stack[i]);
+    }
+}
+void main(void)
+{
+    int ch;
+    while(1)
+    {
+        printf(":::MENU:::\n1:Push\n2:Pop\n3:Peek\n4:Display\n");
+        printf("Enter Choice:");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:
+            {
+                Push();
+                break;
+            }
+            case 2:
+            {
+                Pop();
+                break;
+            }
+            case 3:
+            {
+                Peek();
+                break;
+            }
+            case 4:
+            {
+                Display();
+                break;
+            }
+
+        }
+    }
+}
