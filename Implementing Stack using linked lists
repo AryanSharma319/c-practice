@@ -16,17 +16,8 @@ struct Node *Creator(struct Node *head,int n)
         printf("Enter Data:");
         scanf("%d",&newnode->data);
         newnode->next=NULL;
-        if(head==NULL)
-        {
-            head=newnode;
-            temp=head;
-        }
-        else
-        {
-            newnode->next=NULL;
-            temp->next=newnode;
-            temp=temp->next;
-        }
+        newnode->next=head;
+        head=newnode;
     }
     return head;
 }
@@ -60,7 +51,7 @@ void Displayer(struct Node *head)
         printf("%d->",temp->data);
         temp=temp->next;
     }
-    printf("NULL");
+    printf("NULL\n");
 }
 void main(void)
 {
@@ -68,7 +59,9 @@ void main(void)
     printf("Enter Number of Nodes:");
     scanf("%d",&n);
     head=Creator(head,n);
-    printf("1:Push and Display.\n2:Pop and Display.\n3:Peek.");
+    while(1)
+    {
+        printf("1:Push and Display.\n2:Pop and Display.\n3:Peek.");
     int choice;
     printf("\nEnter Choice:");
     scanf("%d",&choice);
@@ -88,7 +81,12 @@ void main(void)
         }
         case 3:
         {
+            if(head==NULL)
+            printf("Empty Stack.");
+            else
             printf("Top: %d",head->data);
+            break;
         }
+    }
     }
 }
