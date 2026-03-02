@@ -1,0 +1,96 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+struct Queue
+{
+    struct Node *Front;
+    struct Node *Rear;
+};
+
+void initqueue(struct Queue *q)
+{
+    q->Front=NULL;
+    q->Rear=NULL;
+}
+
+void enqueue(struct Queue *q)
+{
+    struct Node *newnode=malloc(sizeof(struct Node));
+    newnode->next=NULL;
+    printf("Enter Data:");
+    scanf("%d",&newnode->data);
+    if(q->Rear==NULL)
+    {
+        q->Front=newnode;
+        q->Rear=newnode;
+    }
+    else
+    {
+        q->Rear->next=newnode;
+        q->Rear=newnode;
+    }
+}
+
+void dequeue(struct Queue *q)
+{
+    if(q->Front==NULL)
+    {
+        printf("Queue is Empty!");
+        return;
+    }
+    struct Node *del=q->Front;
+    q->Front=del->next;
+    if(q->Front==NULL)
+    {
+        q->Rear=NULL;
+    }
+    free(del);
+}
+
+void Displayer(struct Queue *q)
+{
+    struct Node *temp=q->Front;
+    while(temp!=NULL)
+    {
+        printf("%d<-",temp->data);
+        temp=temp->next;
+    }
+    printf("NULL");
+}
+
+void main(void)
+{
+    struct Queue *q;
+    initqueue(q);
+    while(1)
+    {
+        printf("\n:::MENU:::\n1:Enqueue\n2:Dequeue\n3:Display");
+        int ch;
+        printf("\nEnter Choice:");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:
+            {
+                enqueue(q);
+                break;
+            }
+            case 2:
+            {
+                dequeue(q);
+                break;
+            }
+            case 3:
+            {
+                Displayer(q);
+                break;
+            }
+        }
+    }
+}
