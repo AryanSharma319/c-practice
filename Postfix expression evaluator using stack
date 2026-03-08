@@ -1,0 +1,95 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct Node 
+{
+    int data;
+    struct Node *next;
+};
+
+struct Stack
+{
+    struct Node *top;
+};
+
+void init(struct Stack *stk)
+{
+    stk->top=NULL;
+}
+
+void Push(struct Stack *stk, int val)
+{
+    struct Node *newnode=malloc(sizeof(struct Node));
+    newnode->data=val;
+    newnode->next=stk->top;
+    stk->top=newnode;
+}
+
+int Pop(struct Stack *stk)
+{
+    if(stk->top==NULL)
+    {
+        printf("Error\n");
+        return 0;
+    }
+    struct Node *del=stk->top;
+    int val=del->data;
+    stk->top=stk->top->next;
+    free(del);
+    return val;
+}
+
+int main(void)
+{
+    char exp[50];
+    printf("Enter Postfix Expression: ");
+    fgets(exp,50,stdin);
+    int len=strlen(exp);
+    if(exp[len-1]=='\n')
+    {
+        exp[len-1]='\0';
+        len--;
+    }
+    struct Stack *stk=malloc(sizeof(struct Stack));
+    init(stk);
+    for(int i=0;i<len;i++)
+    {
+        int temp=0;
+        if(exp[i]>='0' && exp[i]<='9')
+        {
+            while(i<len && exp[i]!=',')
+            {
+                temp=temp*10+(exp[i]-'0');
+                i++;
+            }
+
+            Push(stk,temp);
+        }
+        else if(exp[i]=='+')
+        {
+            int b=Pop(stk);
+            int a=Pop(stk);
+            Push(stk,a+b);
+        }
+        else if(exp[i]=='-')
+        {
+            int b=Pop(stk);
+            int a=Pop(stk);
+            Push(stk,a-b);
+        }
+        else if(exp[i]=='*')
+        {
+            int b=Pop(stk);
+            int a=Pop(stk);
+            Push(stk,a*b);
+        }
+        else if(exp[i]=='/')
+        {
+            int b=Pop(stk);
+            int a=Pop(stk);
+            Push(stk,a/b);
+        }
+    }
+    printf("Result=%d\n",Pop(stk));
+}
