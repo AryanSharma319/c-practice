@@ -1,1 +1,1 @@
-This Repository contains my C programming practice on Linux.
+This Repository contains my C programming practice including primarily of Data Structures.
