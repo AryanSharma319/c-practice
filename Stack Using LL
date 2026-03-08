@@ -1,0 +1,56 @@
+#include<stdlib.h>
+#include<stdio.h>
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+struct Stack
+{
+    struct Node *top;
+};
+
+struct Node *Creator(struct Node *top, int n)
+{
+    struct Node *temp=top;
+    for(int i=0;i<n;i++)
+    {
+        struct Node *newnode=malloc(sizeof(struct Node));
+        printf("Enter Data:");
+        scanf("%d",&newnode->data);
+        newnode->next=NULL;
+        if(top==NULL)
+        {
+            top=newnode;
+        }
+        else
+        {
+            newnode->next=top;
+            top=newnode;
+        }
+    }
+    return top;
+}
+
+void Display(struct Node *top)
+{
+    struct Node *temp=top;
+    while(temp!=NULL)
+    {
+        printf("%d<-",temp->data);
+        temp=temp->next;
+    }
+    printf("NULL");
+}
+
+void main(void)
+{
+    int n;
+    printf("Enter Number of Nodes:");
+    scanf("%d",&n);
+    struct Node *top=NULL;
+    top=Creator(top,n);
+    Display(top);
+}
