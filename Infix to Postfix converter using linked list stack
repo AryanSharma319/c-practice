@@ -1,0 +1,138 @@
+#include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
+
+struct Node
+{
+    char c;
+    struct Node *next;
+};
+
+struct Stack
+{
+    struct Node *top;
+};
+
+void initialize(struct Stack *stk)
+{
+    stk->top=NULL;
+}
+
+void Push(struct Stack *stk, char c)
+{
+    struct Node *newnode=malloc(sizeof(struct Node));
+    newnode->c=c;
+    newnode->next=NULL;
+    if(stk->top==NULL)
+    {
+        stk->top=newnode;
+    }
+    else
+    {
+        newnode->next=stk->top;
+        stk->top=newnode;
+    }
+}
+
+char Pop(struct Stack *stk)
+{
+    if(stk->top==NULL)
+    {
+        printf("Error");
+        return '\0';
+    }
+    struct Node *del=stk->top;
+    char pop=del->c;
+    stk->top=stk->top->next;
+    free(del);
+    return pop;
+}
+
+void Display(struct Node *top)
+{
+    struct Node *temp=top, *temp1;
+    int n=0;
+    while(temp!=NULL)
+    {
+        n++;
+        temp=temp->next;
+    }
+    for(int i=n-1;i>=0;i--)
+    {
+        temp1=top;
+        for(int j=0;j<i;j++)
+        {
+            temp1=temp1->next;
+        }
+        printf("%c",temp1->c);
+    }
+}
+
+void main(void)
+{
+    struct Stack *postfix=malloc(sizeof(struct Stack));
+    initialize(postfix);
+
+    struct Stack *operation=malloc(sizeof(struct Stack));
+    initialize(operation);
+
+    char exp[15];
+    printf("Enter Expression:");
+    fgets(exp,15,stdin);
+
+    int len=strlen(exp);
+
+    if(exp[len-1]=='\n')
+    {
+        exp[len-1]='\0';
+        len--;
+    }
+
+    for(int i=0;i<len;i++)
+    {
+        if(exp[i]=='(')
+        {
+            Push(operation,exp[i]);
+        }
+
+        else if((exp[i]=='+' || exp[i]=='-' || exp[i]=='*' || exp[i]=='/') && (operation->top==NULL))
+        {
+            Push(operation,exp[i]);
+        }
+
+        else if(exp[i]!='+' && exp[i]!='-' && exp[i]!='*' && exp[i]!='/' && exp[i]!='(' && exp[i]!=')')
+        {
+            Push(postfix,exp[i]);
+        }
+
+        if(operation->top!=NULL && (operation->top->c=='+' || operation->top->c=='-') && (exp[i]=='*' || exp[i]=='/'))
+        {
+            Push(operation,exp[i]);
+        }
+
+        while(operation->top!=NULL && ((operation->top->c=='*' || operation->top->c=='/') && (exp[i]=='+' || exp[i]=='-')))
+        {
+            Push(postfix,operation->top->c);
+            Pop(operation);
+        }
+        Push(operation,exp[i]);
+
+        if(exp[i]==')' && operation->top!=NULL)
+        {
+            while(operation->top->c!='(')
+            {
+                Push(postfix,operation->top->c);
+                Pop(operation);
+            }
+            Pop(operation);
+        }
+    }
+
+    while(operation->top!=NULL)
+    {
+        Push(postfix,operation->top->c);
+        Pop(operation);
+    }
+
+    Display(postfix->top);
+}
