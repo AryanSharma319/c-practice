@@ -1,0 +1,106 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *left;
+    struct Node *right;
+};
+
+void Inorder(struct Node *root)
+{
+    if(root==NULL)
+    return;
+    Inorder(root->left);
+    printf("%d\t",root->data);
+    Inorder(root->right);
+}
+
+void swapper(int *a, int *b)
+{
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
+
+int min(int a, int b)
+{
+    if(a>=b)
+    return b;
+    else
+    return a;
+}
+
+void Heap_Sort(int n, int val[n], int i)
+{
+    int largest=i;
+    int left=2*i+1;
+    int right=2*i+2;
+    if(left<n && val[largest]<val[left])
+    {
+        largest=left;
+    }
+    if(right<n && val[largest]<val[right])
+    {
+        largest=right;
+    }
+
+    if(largest!=i)
+    {
+        swapper(&val[i],&val[largest]);
+        Heap_Sort(n,val,largest);
+    }
+}
+
+struct Node *Heaper(struct Node *root, int val, int pos)
+{
+    if(pos==1)
+    {
+        struct Node *newnode=malloc(sizeof(struct Node));
+        newnode->left=NULL;
+        newnode->right=NULL;
+        newnode->data=val;
+        return newnode;
+    }
+    if(root==NULL)
+    return NULL;
+    
+    if(pos%2==0)
+    {
+        root->left=Heaper(root->left,val,pos/2);
+    }
+    if(pos%2!=0)
+    {
+        root->right=Heaper(root->right,val,pos/2);
+    }
+    return root;
+}
+
+void main(void)
+{
+    int n;
+    printf("Enter Number of Nodes:");
+    scanf("%d",&n);
+    int val[n];
+    struct Node *root=NULL;
+    for(int i=0;i<n;i++)
+    {
+        printf("Enter Value:");
+        scanf("%d",&val[i]);
+    }
+    for(int i=n/2-1;i>=0;i--)
+    {
+        Heap_Sort(n,val,i);
+    }
+    for(int i=0;i<n;i++)
+    {
+        root=Heaper(root,val[i],i+1);
+    }
+    for(int i=0;i<n;i++)
+    {
+        printf("%d\t",val[i]);
+    }
+    printf("\n");
+    Inorder(root);
+}
