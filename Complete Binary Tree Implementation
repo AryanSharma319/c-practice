@@ -1,0 +1,56 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *left;
+    struct Node *right;
+};
+
+void Inorder(struct Node *root)
+{
+    if(root==NULL)
+    return;
+    Inorder(root->left);
+    printf("%d\t",root->data);
+    Inorder(root->right);
+}
+
+struct Node *Heaper(struct Node *root, int val, int pos)
+{
+    struct Node *newnode=malloc(sizeof(struct Node));
+    newnode->left=NULL;
+    newnode->right=NULL;
+    newnode->data=val;
+    if(pos==1)
+    return newnode;
+    else if(pos%2==0)
+    {
+        root->left=Heaper(root->left,val,pos/2);
+    }
+    else if(pos%2!=0)
+    {
+        root->right=Heaper(root->right,val,pos/2);
+    }
+    return root;
+}
+
+void main(void)
+{
+    int n;
+    printf("Enter Number of Nodes:");
+    scanf("%d",&n);
+    int val[n];
+    struct Node *root=NULL;
+    for(int i=0;i<n;i++)
+    {
+        printf("Enter Value:");
+        scanf("%d",&val[i]);
+    }
+    for(int i=0;i<n;i++)
+    {
+        root=Heaper(root,val[i],i+1);
+    }
+    Inorder(root);
+}
